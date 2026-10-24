@@ -61,10 +61,10 @@
       "area": "service",
       "title": "Build runner, daemon and container",
       "user_visible_behavior": "In full mode, an accepted issue that is not queued starts one harness loop run in the harness clone, at most build.maxPerDay per day and only while the harness config gates its intake on updater:accepted. The daemon runs a cycle every pollMinutes under a lock; updater status, survey, issues, triage and health work in the container, which docker compose builds and starts with the tokens from .env and the host projects mounted read-only.",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": ["F-002"],
       "verification": ["L1: pnpm check"],
-      "evidence": [],
+      "evidence": ["2026-10-24 pnpm check → pass (working tree on 996bc4f)"],
       "attempts": 0,
       "notes": ""
     },

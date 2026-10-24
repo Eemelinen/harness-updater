@@ -9,13 +9,13 @@ this file to change on every branch; keep that heading text exactly.
 - Repository root: `harness-updater/`.
 - Standard startup path: `./init.sh` (`FAST=1` skips the baseline).
 - Standard verification path: L1 `pnpm check`. Per feature: `pnpm harness:verify F-NNN`.
-- The service runs in Docker (`docker compose up -d --build`); it is not started yet.
-- Last verified: F-002 on this branch, `pnpm check` green on 2026-10-24.
+- The service runs in Docker (`docker compose up -d --build`); the image builds; it is not started yet.
+- Last verified: F-003 on this branch, `pnpm check` green on 2026-10-24.
 - Current blocker: going live needs the tokens in `.env` (F-004, human-only).
 
 ## Next Steps
 
-1. F-001…F-003: survey and sync, triage, build and the container.
+1. Merge `feat/service` (F-001…F-003).
 2. F-004 (needs the maintainer): tokens, then `observe` → `triage` → harness `retro.intakeLabel` →
    `full` (README.md → Going live).
 
@@ -34,6 +34,13 @@ this file to change on every branch; keep that heading text exactly.
   feature block replaces the old one. A rejection closes the issue as not planned, except on a
   quarantine issue, where it becomes needs-human (D-003). Prettier is kept off `prompts/` so the
   `~~~~` data fence survives. Verification: `pnpm harness:verify F-002`.
+- F-003: in full mode, an accepted unqueued issue starts one `harness loop --once` in the harness
+  clone, within `build.maxPerDay`, and only while the harness config gates its intake on
+  `updater:accepted`. Without the gate the loop could build issues triage never accepted. The
+  daemon runs cycles under a lock and stops cleanly on SIGTERM; `updater status|survey|issues|
+triage|health|once` work in the container. The image (node 22, gh, Claude Code 2.1.310, uid 1001) builds, refuses to start without tokens, runs the CLI, and reads the host projects through
+  the read-only mount; CI builds it too. Verification: `pnpm harness:verify F-003`, plus
+  `docker build` and container smoke runs.
 
 ### Session 001 — 2026-10-24 (scaffold)
 

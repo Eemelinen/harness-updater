@@ -24,3 +24,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - name: Container image builds
+        run: docker build --quiet -t harness-updater:ci .

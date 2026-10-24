@@ -21,6 +21,15 @@ this file to change on every branch; keep that heading text exactly.
 
 ## Session Log
 
+### Session 003 — 2026-10-24 (hardening)
+
+- `.claude/settings.json` drops the `Write(...)` deny rules that Claude Code ignores; `Edit(...)`
+  covers every file-editing tool.
+- The five repositories accept issues, PRs and comments only from collaborators until 2027-04-24
+  (README.md → Interaction limits has the renewal command).
+- Both tokens were tested in the container: Claude answers, and the GitHub token can push to and
+  read issues of all five repositories.
+
 ### Session 002 — 2026-10-24 (the service)
 
 - F-001: the survey finds the owner's repositories that depend on the harness (or the configured

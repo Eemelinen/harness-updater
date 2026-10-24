@@ -32,6 +32,22 @@ improving itself safely. Every 10 minutes it:
 | Your checkouts                                | Mounted read-only, only for reading loop traces. The updater works in its own clones in the `/data` volume.                      |
 | Secrets                                       | Only in `.env` on this machine. `pnpm check` and the pre-commit hook fail when a token-like string is tracked.                   |
 
+### Interaction limits
+
+The five repositories (`harness`, `harness-updater`, `idea-generator`, `metsavahti`,
+`personal-finances`) accept issues, PRs and comments only from collaborators, which means only you.
+GitHub caps a limit at six months; these expire on **2027-04-24**. Renew them before then:
+
+```bash
+for r in harness harness-updater idea-generator metsavahti personal-finances; do
+  echo '{"limit":"collaborators_only","expiry":"six_months"}' |
+    gh api -X PUT "repos/Eemelinen/$r/interaction-limits" --input -
+done
+```
+
+The updater keeps working without them, because it only reads the owner's issues and comments.
+The limits remove other people's text, and with it any injection attempt, at the source.
+
 ## Modes
 
 `UPDATER_MODE` in `.env`:

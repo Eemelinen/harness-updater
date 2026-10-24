@@ -22,8 +22,8 @@ importers:
         specifier: ^21.2.4
         version: 21.2.4
       '@eemelinen/harness':
-        specifier: github:Eemelinen/harness#v0.3.3
-        version: https://codeload.github.com/Eemelinen/harness/tar.gz/67cb7be40e4e884d0ddd775dbc89c0897a01d605
+        specifier: github:Eemelinen/harness#v0.3.5
+        version: https://codeload.github.com/Eemelinen/harness/tar.gz/7a84c1a24e823673911155556cf9e69c39728a6b
       '@types/node':
         specifier: ^22.20.1
         version: 22.20.5
@@ -138,9 +138,9 @@ packages:
     resolution: {integrity: sha512-aalGyl7dbB5PArRebDIX43ZvBlXrYm9uWzGJ26t+4SzJVPsOuvfILGGbw5X4yX7i50YEmJ8zvbiWnqH/AAnZqg==}
     engines: {node: '>=22'}
 
-  '@eemelinen/harness@https://codeload.github.com/Eemelinen/harness/tar.gz/67cb7be40e4e884d0ddd775dbc89c0897a01d605':
-    resolution: {tarball: https://codeload.github.com/Eemelinen/harness/tar.gz/67cb7be40e4e884d0ddd775dbc89c0897a01d605}
-    version: 0.3.3
+  '@eemelinen/harness@https://codeload.github.com/Eemelinen/harness/tar.gz/7a84c1a24e823673911155556cf9e69c39728a6b':
+    resolution: {tarball: https://codeload.github.com/Eemelinen/harness/tar.gz/7a84c1a24e823673911155556cf9e69c39728a6b}
+    version: 0.3.5
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -1039,7 +1039,7 @@ snapshots:
 
   '@conventional-changelog/template@1.4.0': {}
 
-  '@eemelinen/harness@https://codeload.github.com/Eemelinen/harness/tar.gz/67cb7be40e4e884d0ddd775dbc89c0897a01d605':
+  '@eemelinen/harness@https://codeload.github.com/Eemelinen/harness/tar.gz/7a84c1a24e823673911155556cf9e69c39728a6b':
     dependencies:
       tsx: 4.23.15
       zod: 4.6.7

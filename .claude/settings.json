@@ -28,7 +28,7 @@
   },
   "extraKnownMarketplaces": {
     "eemelinen-harness": {
-      "source": { "source": "github", "repo": "Eemelinen/harness", "ref": "v0.3.3" }
+      "source": { "source": "github", "repo": "Eemelinen/harness", "ref": "v0.3.5" }
     }
   },
   "enabledPlugins": {

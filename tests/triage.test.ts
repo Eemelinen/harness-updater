@@ -198,11 +198,23 @@ describe('the session', () => {
     expect(args.some((a) => /Bash\((git push|gh issue (edit|close|comment)|rm)/.test(a))).toBe(
       false,
     )
+    // Chained read commands (cd … && git log) need every part allowed.
+    expect(args).toEqual(expect.arrayContaining(['Bash(cd *)', 'Bash(tail *)', 'Bash(git tag*)']))
     expect(JSON.parse(args[args.indexOf('--json-schema') + 1]!).properties.verdict.enum).toEqual([
       'accepted',
       'rejected',
       'needs-human',
     ])
+  })
+
+  it('passes a schema without the meta-schema line Claude Code rejects', () => {
+    const args = triageArgs('p', { model: 'm', maxTurns: 1, maxBudgetUsd: 1 })
+    const schema = JSON.parse(args[args.indexOf('--json-schema') + 1]!)
+    expect(schema.$schema).toBeUndefined()
+    expect(schema).toMatchObject({
+      type: 'object',
+      required: expect.arrayContaining(['verdict', 'reason']),
+    })
   })
 
   it('accepts only a verdict that matches the schema', () => {

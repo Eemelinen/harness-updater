@@ -198,11 +198,17 @@ export const TRIAGE_ALLOWED = [
   'Read',
   'Grep',
   'Glob',
+  // Every part of a chained command must match, so `cd … && git log` needs cd too.
+  'Bash(cd *)',
+  'Bash(ls*)',
+  'Bash(head *)',
+  'Bash(tail *)',
+  'Bash(wc *)',
+  'Bash(git tag*)',
   'Bash(git log*)',
   'Bash(git show*)',
   'Bash(git diff*)',
   'Bash(git grep*)',
-  'Bash(ls*)',
   'Bash(gh issue view*)',
   'Bash(gh issue list*)',
   'Bash(gh pr view*)',
@@ -211,6 +217,15 @@ export const TRIAGE_ALLOWED = [
   'Bash(gh release list*)',
   'Bash(gh release view*)',
 ]
+
+/**
+ * The verdict schema for `--json-schema`. Without zod's `$schema` line: Claude Code rejects the
+ * draft 2020-12 meta-schema reference ("no schema with key or ref").
+ */
+export function verdictJsonSchema(): Record<string, unknown> {
+  const { $schema: _metaSchema, ...schema } = z.toJSONSchema(verdictSchema)
+  return schema
+}
 
 export function triageArgs(
   prompt: string,
@@ -237,7 +252,7 @@ export function triageArgs(
     '--output-format',
     'json',
     '--json-schema',
-    JSON.stringify(z.toJSONSchema(verdictSchema)),
+    JSON.stringify(verdictJsonSchema()),
   ]
 }
 
@@ -290,5 +305,9 @@ export function runTriage(
     path.join(logDir, `triage-${issue}-${new Date().toISOString().replace(/[:.]/g, '-')}.json`),
     r.out || r.err,
   )
-  return parseVerdict(r.out)
+  const parsed = parseVerdict(r.out)
+  // A session that failed to start writes its reason to stderr and nothing to stdout.
+  if (!parsed.verdict && !r.out)
+    return { ...parsed, error: `exit ${r.code}: ${r.err.slice(0, 500)}` }
+  return parsed
 }

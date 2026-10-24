@@ -3,7 +3,9 @@ The harness is used by the repositories in the survey below. Most issues were fi
 a retro session that read a project's loop traces, or a project's loop driver that quarantined a
 release after it failed there. Your verdict decides whether the harness loop spends a session on it.
 
-You are read-only. You can read files and run read-only git and gh commands; nothing else.
+You are read-only. You can read files and run read-only commands: `cd`, `ls`, `head`, `tail`,
+`wc`, `git log|show|diff|grep|tag`, and `gh issue|pr|release view|list` (plus `gh pr diff`).
+Anything else, including any command that writes, pushes or comments, is denied.
 
 ## What you can look at
 

@@ -1,0 +1,106 @@
+{
+  "$schema": "./node_modules/@eemelinen/harness/schema/harness.config.schema.json",
+  "project": {
+    "name": "harness-updater",
+    "sourceDirs": ["src", "prompts", "docker", "scripts"]
+  },
+  "services": null,
+  "milestones": [
+    {
+      "pattern": "pnpm check(?:\\s|$)",
+      "label": "L1 pnpm check"
+    }
+  ],
+  "guard": {
+    "bash": [
+      {
+        "pattern": "(npx |pnpm (exec|dlx) |\\./node_modules/\\.bin/)?vitest(\\s|$)",
+        "atCommandStart": true,
+        "reason": "run tests through pnpm test (or pnpm check); it uses the repository's Vitest config"
+      },
+      {
+        "pattern": "docker (compose (up|down|restart|stop|rm|run)|stop|rm|kill|volume rm)(\\s|$)",
+        "atCommandStart": true,
+        "reason": "the running updater container and its data volume are managed by a human; sessions may only docker build"
+      }
+    ],
+    "paths": [
+      {
+        "match": ".env.example",
+        "decision": "skip"
+      },
+      {
+        "match": ".env*",
+        "decision": "deny",
+        "reason": "secrets; document variables in .env.example instead (the repository is public)"
+      }
+    ]
+  },
+  "cleanState": {
+    "checks": [
+      {
+        "name": "no .only/.skip added under tests/",
+        "kind": "added",
+        "paths": ["tests"],
+        "pattern": "\\.(only|skip)\\(|\\b(it|test|describe)\\.(only|skip)\\b",
+        "message": "a .only/.skip was added under tests/ (AGENTS.md: never skip tests to get green)"
+      }
+    ]
+  },
+  "sessionStart": {
+    "lines": [
+      {
+        "file": ".env",
+        "present": "env: .env present",
+        "missing": "env: .env missing (only the container needs it)"
+      }
+    ],
+    "hint": "Clock-in: AGENTS.md \u2192 Clock-in (or /harness:clock-in). Layer: pnpm check (L1: typecheck, format, secrets, harness check, tests)."
+  },
+  "generator": {
+    "model": "claude-opus-5-5",
+    "effort": "high"
+  },
+  "evaluator": {
+    "model": "claude-opus-5-5",
+    "effort": "high"
+  },
+  "allowedTools": [
+    "Bash(pnpm check*)",
+    "Bash(pnpm typecheck)",
+    "Bash(pnpm test*)",
+    "Bash(pnpm format*)",
+    "Bash(pnpm secrets:check)",
+    "Bash(pnpm harness:*)",
+    "Bash(pnpm exec prettier*)",
+    "Bash(pnpm exec tsc*)",
+    "Bash(FAST=1 ./init.sh)",
+    "Bash(docker build *)",
+    "Bash(git status*)",
+    "Bash(git log*)",
+    "Bash(git diff*)",
+    "Bash(git show*)",
+    "Bash(git add *)",
+    "Bash(git commit *)"
+  ],
+  "merge": "auto",
+  "reviewPaths": [
+    ".claude/*",
+    ".github/workflows/*",
+    "harness.config.json",
+    "src/triage.ts",
+    "src/build.ts",
+    "src/github.ts",
+    "prompts/*",
+    "Dockerfile",
+    "compose.yaml",
+    "docker/*"
+  ],
+  "update": {
+    "auto": true,
+    "canary": false
+  },
+  "prompts": {
+    "generatorNotes": "docs/harness/generator-notes.md"
+  }
+}

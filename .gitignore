@@ -1,0 +1,9 @@
+node_modules/
+.harness/
+coverage/
+# Secrets: tokens live only in .env on this machine (the repository is public).
+.env
+.env.*
+!.env.example
+# The container's /data volume, if mounted locally for debugging.
+data/

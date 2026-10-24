@@ -19,10 +19,13 @@
       "area": "harness",
       "title": "Harness adoption and tooling",
       "user_visible_behavior": "A fresh session can clock in from AGENTS.md, PROGRESS.md and this file; ./init.sh, pnpm harness:doctor and pnpm check pass; tokens cannot be committed (pnpm secrets:check).",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [],
       "verification": ["L1: pnpm check", "L1: pnpm harness:doctor"],
-      "evidence": [],
+      "evidence": [
+        "2026-10-24 pnpm check → pass (working tree on e337a2d)",
+        "2026-10-24 pnpm harness:doctor → pass (working tree on e337a2d)"
+      ],
       "attempts": 0,
       "notes": "Adopts @eemelinen/harness v0.3.3."
     },
@@ -78,7 +81,7 @@
       ],
       "evidence": [],
       "attempts": 0,
-      "notes": "Needs the maintainer: tokens (README.md \u2192 Tokens)."
+      "notes": "Needs the maintainer: tokens (README.md → Tokens)."
     }
   ]
 }

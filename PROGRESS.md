@@ -10,6 +10,7 @@ this file to change on every branch; keep that heading text exactly.
 - Standard startup path: `./init.sh` (`FAST=1` skips the baseline).
 - Standard verification path: L1 `pnpm check`. Per feature: `pnpm harness:verify F-NNN`.
 - The service runs in Docker (`docker compose up -d --build`); it is not started yet.
+- Last verified: F-000 on this commit, `pnpm check` green on 2026-10-24.
 - Current blocker: going live needs the tokens in `.env` (F-004, human-only).
 
 ## Next Steps
@@ -27,3 +28,4 @@ this file to change on every branch; keep that heading text exactly.
 - Completed: tooling (TypeScript, Vitest, Prettier, husky, commitlint, CI), harness adoption at
   v0.3.3 (AGENTS.md, harness.config.json, plugin pin), the config module, and the secrets check
   for this public repository.
+- Verification: `pnpm harness:verify F-000` → L1 `pnpm check` and `pnpm harness:doctor` pass.

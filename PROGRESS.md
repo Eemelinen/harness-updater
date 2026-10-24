@@ -10,7 +10,7 @@ this file to change on every branch; keep that heading text exactly.
 - Standard startup path: `./init.sh` (`FAST=1` skips the baseline).
 - Standard verification path: L1 `pnpm check`. Per feature: `pnpm harness:verify F-NNN`.
 - The service runs in Docker (`docker compose up -d --build`); it is not started yet.
-- Last verified: F-000 on this commit, `pnpm check` green on 2026-10-24.
+- Last verified: F-001 on this branch, `pnpm check` green on 2026-10-24.
 - Current blocker: going live needs the tokens in `.env` (F-004, human-only).
 
 ## Next Steps
@@ -20,6 +20,14 @@ this file to change on every branch; keep that heading text exactly.
    `full` (README.md → Going live).
 
 ## Session Log
+
+### Session 002 — 2026-10-24 (the service)
+
+- F-001: the survey finds the owner's repositories that depend on the harness (or the configured
+  list), records per consumer its pin, rollout settings, merge policy, retro settings, CI and open
+  retro issues, plus a runs.jsonl summary for checkouts on this machine. The updater keeps its own
+  clones in `/data`, which it resets at will. Checked live (read-only): it found idea-generator,
+  metsavahti and personal-finances on v0.3.1. Verification: `pnpm harness:verify F-001`.
 
 ### Session 001 — 2026-10-24 (scaffold)
 

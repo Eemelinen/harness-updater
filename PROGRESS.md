@@ -29,6 +29,14 @@ this file to change on every branch; keep that heading text exactly.
   (README.md → Interaction limits has the renewal command).
 - Both tokens were tested in the container: Claude answers, and the GitHub token can push to and
   read issues of all five repositories.
+- First live triage (#11, the v0.3.2 quarantine), with two fixes:
+  - Claude Code rejected the `--json-schema` because zod adds a `$schema` meta-schema line; the
+    updater now drops that line, and logs stderr when a session fails to start.
+  - Chained read commands (`cd … && git log`, `tail`) were denied; the allowlist now includes
+    those read-only parts.
+
+  The verdict: needs-human (cause unknown from the evidence), with a refined feature that captures
+  a restarted driver's output. $0.98, 34 turns, 2 min.
 
 ### Session 002 — 2026-10-24 (the service)
 

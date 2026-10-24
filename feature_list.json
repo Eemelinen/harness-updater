@@ -74,12 +74,14 @@
       "area": "service",
       "title": "Go live",
       "user_visible_behavior": "The container runs against real GitHub: observe mode logs verdicts for real issues, triage mode posts them, the harness config sets retro.intakeLabel to updater:accepted, and full mode builds an accepted issue into a harness PR.",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": ["F-003"],
       "verification": [
         "manual: the maintainer fills in .env, runs docker compose up -d --build in observe mode, checks the logged verdicts, switches to triage and then full after the harness intake gate is merged"
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-10-24 manual: the maintainer fills in .env, runs docker compose up -d --build in observe mode, checks the logged verdicts, switches to triage and then full after the harness intake gate is merged → observed by eemeli: container in full mode since 2026-10-24T12:40Z (observe mode had logged #11 only); harness main gates intake on updater:accepted; the 18:44Z cycle posted Accepted verdicts and labels on harness #20-#22, then harness loop --once took #20 in as F-015 and opened Eemelinen/harness#23 (held for human review: reviewPaths) (working tree on 2c2e8c3)"
+      ],
       "attempts": 0,
       "notes": "Needs the maintainer: tokens (README.md → Tokens)."
     }

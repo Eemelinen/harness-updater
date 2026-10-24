@@ -9,17 +9,40 @@ this file to change on every branch; keep that heading text exactly.
 - Repository root: `harness-updater/`.
 - Standard startup path: `./init.sh` (`FAST=1` skips the baseline).
 - Standard verification path: L1 `pnpm check`. Per feature: `pnpm harness:verify F-NNN`.
-- The service runs in Docker (`docker compose up -d --build`); the image builds; it is not started yet.
-- Last verified: F-003 on this branch, `pnpm check` green on 2026-10-24.
-- Current blocker: going live needs the tokens in `.env` (F-004, human-only).
+- The service is live: the container has run in `full` mode since 2026-10-24 (`docker compose ps`,
+  `docker compose exec updater updater status`), and the harness gates its retro intake on
+  `updater:accepted`.
+- Last verified: F-004 on `feat/F-004`, `pnpm check` green on 2026-10-24. Every feature is passing.
+- Current blocker: none.
 
 ## Next Steps
 
-1. Merge `feat/service` (F-001…F-003).
-2. F-004 (needs the maintainer): tokens, then `observe` → `triage` → harness `retro.intakeLabel` →
-   `full` (README.md → Going live).
+1. Review and merge harness PR Eemelinen/harness#23 (F-015 from #20). It changes the guard hooks
+   and `src/config.ts` (harness `reviewPaths`), so it waits for a human.
+2. #21 and #22 are accepted and are built in the next cycles, within `build.maxPerDay` (4). Their PRs
+   may also wait for review.
+3. Don't run `pnpm harness:loop` in the harness repository by hand while the updater is in `full`
+   mode (README.md → Going live).
 
 ## Session Log
+
+### Session 004 — 2026-10-24 (F-004 go live)
+
+- Goal: F-004. Run the updater against real GitHub through observe → triage → full, with the
+  harness intake gate.
+- Observed:
+  - The maintainer had set up `.env` and started the container. Observe mode logged #11
+    (`rejected (fixed) [logged only]`).
+  - The harness `main` sets `retro.intakeLabel: "updater:accepted"`.
+  - The container runs in `full` mode. In the 18:44 UTC cycle it triaged and accepted #20, #21
+    and #22, posting a verdict comment and the `updater:accepted` label on each.
+  - It then ran `harness loop --once` in `/data/harness`. That took #20 in as harness F-015, built
+    it, got an evaluator Accept, and opened Eemelinen/harness#23.
+  - The loop held #23 for a human review because it changes `reviewPaths` files.
+- No code changes; the service already did what F-004 asks.
+- Verification: `pnpm harness:verify F-004 --manual-observed …` (`pnpm check` plus the observed
+  go-live).
+- Next best step: review harness#23. Watch #21 and #22 build in the next cycles.
 
 ### Session 003 — 2026-10-24 (hardening)
 

@@ -10,7 +10,7 @@ this file to change on every branch; keep that heading text exactly.
 - Standard startup path: `./init.sh` (`FAST=1` skips the baseline).
 - Standard verification path: L1 `pnpm check`. Per feature: `pnpm harness:verify F-NNN`.
 - The service runs in Docker (`docker compose up -d --build`); it is not started yet.
-- Last verified: F-001 on this branch, `pnpm check` green on 2026-10-24.
+- Last verified: F-002 on this branch, `pnpm check` green on 2026-10-24.
 - Current blocker: going live needs the tokens in `.env` (F-004, human-only).
 
 ## Next Steps
@@ -28,6 +28,12 @@ this file to change on every branch; keep that heading text exactly.
   retro issues, plus a runs.jsonl summary for checkouts on this machine. The updater keeps its own
   clones in `/data`, which it resets at will. Checked live (read-only): it found idea-generator,
   metsavahti and personal-finances on v0.3.1. Verification: `pnpm harness:verify F-001`.
+- F-002: triage selects the owner's open retro issues without a verdict (or reopened, or commented
+  since) and runs one read-only session each (`dontAsk`, read-only Bash only, schema-checked
+  verdict). Verdicts become a comment with a per-consumer table and an `updater:*` label. A refined
+  feature block replaces the old one. A rejection closes the issue as not planned, except on a
+  quarantine issue, where it becomes needs-human (D-003). Prettier is kept off `prompts/` so the
+  `~~~~` data fence survives. Verification: `pnpm harness:verify F-002`.
 
 ### Session 001 — 2026-10-24 (scaffold)
 

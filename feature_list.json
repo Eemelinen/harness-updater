@@ -48,10 +48,10 @@
       "area": "triage",
       "title": "Triage of harness issues with a read-only session",
       "user_visible_behavior": "Open retro and quarantine issues opened by the owner, without a verdict (or reopened, or commented since), are triaged one by one: a read-only Claude session with the survey and the clones answers accepted, rejected or needs-human with per-consumer reasoning. The verdict is posted as a comment and an updater:* label; a refined feature block replaces the old one; rejected issues are closed as not planned, except quarantine issues, which become needs-human. Observe mode only logs.",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": ["F-001"],
       "verification": ["L1: pnpm check"],
-      "evidence": [],
+      "evidence": ["2026-10-24 pnpm check → pass (working tree on 298ec15)"],
       "attempts": 0,
       "notes": ""
     },

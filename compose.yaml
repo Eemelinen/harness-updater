@@ -1,0 +1,30 @@
+# docker compose up -d --build   (README.md → Running it)
+services:
+  updater:
+    build:
+      context: .
+      args:
+        UID: ${UPDATER_UID:-1001}
+        GID: ${UPDATER_GID:-1001}
+    image: harness-updater:local
+    init: true
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      UPDATER_DATA: /data
+      UPDATER_HOST_PROJECTS: ${HOST_PROJECTS:-/home/eemeli/projects}
+    volumes:
+      - updater-data:/data
+      # Your projects, read-only at the same path: quarantine issues name traces by absolute path.
+      - ${HOST_PROJECTS:-/home/eemeli/projects}:${HOST_PROJECTS:-/home/eemeli/projects}:ro
+    # A running harness loop gets SIGINT and finishes its current step.
+    stop_grace_period: 2m
+    healthcheck:
+      test: ['CMD', 'updater', 'health']
+      interval: 5m
+      timeout: 30s
+      start_period: 20m
+      retries: 2
+
+volumes:
+  updater-data:

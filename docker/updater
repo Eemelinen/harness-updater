@@ -1,0 +1,3 @@
+#!/bin/sh
+# `updater <command>` inside the container (src/cli.ts).
+cd /app && exec node --import tsx src/cli.ts "$@"
